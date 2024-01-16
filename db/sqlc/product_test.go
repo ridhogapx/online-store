@@ -32,3 +32,21 @@ func TestCreateProduct(t *testing.T) {
 
 	fmt.Println("Result:", res)
 }
+
+func TestFindingProduct(t *testing.T) {
+	// Finding product within id category 2
+	res, err := testQueries.FindProductByCategory(context.Background(), 2)
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	for _, items := range res {
+		fmt.Println("------------------------------------------------------")
+		fmt.Println("Product ID:", items.ProductID)
+		fmt.Println("Product Name:", items.ProductName)
+		fmt.Println("Category:", items.CategoryName)
+		fmt.Println("Price:", items.Price)
+		fmt.Println("------------------------------------------------------")
+	}
+}
