@@ -1,6 +1,6 @@
 CREATE TABLE "products" (
   "product_id" varchar PRIMARY KEY NOT NULL,
-  "category_id" varchar NOT NULL,
+  "category_id" bigserial NOT NULL,
   "product_name" varchar NOT NULL,
   "price" bigserial NOT NULL,
   "created_at" timestamptz NOT NULL DEFAULT (now())
