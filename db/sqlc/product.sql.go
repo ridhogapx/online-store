@@ -12,34 +12,34 @@ import (
 
 const createProduct = `-- name: CreateProduct :one
 INSERT INTO products (
-    id,
+    product_id,
     category_id,
-    name,
+    product_name,
     price
 ) VALUES (
     $1, $2, $3, $4
-) RETURNING id, category_id, name, price, created_at
+) RETURNING product_id, category_id, product_name, price, created_at
 `
 
 type CreateProductParams struct {
-	ID         string `json:"id"`
-	CategoryID string `json:"category_id"`
-	Name       string `json:"name"`
-	Price      int64  `json:"price"`
+	ProductID   string `json:"product_id"`
+	CategoryID  int64  `json:"category_id"`
+	ProductName string `json:"product_name"`
+	Price       int64  `json:"price"`
 }
 
 func (q *Queries) CreateProduct(ctx context.Context, arg CreateProductParams) (Product, error) {
 	row := q.db.QueryRowContext(ctx, createProduct,
-		arg.ID,
+		arg.ProductID,
 		arg.CategoryID,
-		arg.Name,
+		arg.ProductName,
 		arg.Price,
 	)
 	var i Product
 	err := row.Scan(
-		&i.ID,
+		&i.ProductID,
 		&i.CategoryID,
-		&i.Name,
+		&i.ProductName,
 		&i.Price,
 		&i.CreatedAt,
 	)
@@ -47,18 +47,18 @@ func (q *Queries) CreateProduct(ctx context.Context, arg CreateProductParams) (P
 }
 
 const findProductByCategory = `-- name: FindProductByCategory :many
-SELECT products.id, categories.name, products.name, products.price, products.created_at FROM products INNER JOIN categories ON products.category_id=categories.id WHERE products.category_id=$1
+SELECT products.product_id, categories.category_name, products.product_name, products.price, products.created_at FROM products INNER JOIN categories ON products.category_id=categories.category_id WHERE products.category_id=$1
 `
 
 type FindProductByCategoryRow struct {
-	ID        string    `json:"id"`
-	Name      string    `json:"name"`
-	Name_2    string    `json:"name_2"`
-	Price     int64     `json:"price"`
-	CreatedAt time.Time `json:"created_at"`
+	ProductID    string    `json:"product_id"`
+	CategoryName string    `json:"category_name"`
+	ProductName  string    `json:"product_name"`
+	Price        int64     `json:"price"`
+	CreatedAt    time.Time `json:"created_at"`
 }
 
-func (q *Queries) FindProductByCategory(ctx context.Context, categoryID string) ([]FindProductByCategoryRow, error) {
+func (q *Queries) FindProductByCategory(ctx context.Context, categoryID int64) ([]FindProductByCategoryRow, error) {
 	rows, err := q.db.QueryContext(ctx, findProductByCategory, categoryID)
 	if err != nil {
 		return nil, err
@@ -68,9 +68,9 @@ func (q *Queries) FindProductByCategory(ctx context.Context, categoryID string) 
 	for rows.Next() {
 		var i FindProductByCategoryRow
 		if err := rows.Scan(
-			&i.ID,
-			&i.Name,
-			&i.Name_2,
+			&i.ProductID,
+			&i.CategoryName,
+			&i.ProductName,
 			&i.Price,
 			&i.CreatedAt,
 		); err != nil {
