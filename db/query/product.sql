@@ -1,12 +1,12 @@
 -- name: CreateProduct :one 
 INSERT INTO products (
-    id,
+    product_id,
     category_id,
-    name,
+    product_name,
     price
 ) VALUES (
     $1, $2, $3, $4
 ) RETURNING *;
 
 -- name: FindProductByCategory :many
-SELECT products.id, categories.name, products.name, products.price, products.created_at FROM products INNER JOIN categories ON products.category_id=categories.id WHERE products.category_id=$1;
+SELECT products.product_id, categories.category_name, products.product_name, products.price, products.created_at FROM products INNER JOIN categories ON products.category_id=categories.category_id WHERE products.category_id=$1;
