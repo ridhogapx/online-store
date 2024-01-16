@@ -17,3 +17,12 @@ INSERT INTO categories (
 ) VALUES (
     $1
 ) RETURNING *;
+
+-- name: CreateCart :one
+INSERT into shopping_carts (
+    cart_id,
+    customer_id, 
+    product_id
+) VALUES (
+    $1, $2, $3
+) RETURNING *;
