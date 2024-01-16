@@ -10,11 +10,6 @@ type Controller struct {
 	Q   *db.Queries
 }
 
-type Response struct {
-	Message string `json:"message"`
-	Status  string `json:"status"`
-}
-
 func Setup(app *fiber.App, q *db.Queries) *Controller {
 	return &Controller{
 		App: app,
