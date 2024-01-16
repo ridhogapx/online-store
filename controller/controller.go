@@ -19,5 +19,10 @@ func Setup(app *fiber.App, q *db.Queries) *Controller {
 
 func (controller *Controller) Routes() {
 	v1 := controller.App.Group("/api/v1")
+
+	// Customer Route
+	v1.Post("/register", controller.Register)
+
+	// Product Route
 	v1.Get("/product", controller.GetProductByCategory)
 }
