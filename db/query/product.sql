@@ -13,8 +13,7 @@ SELECT products.product_id, categories.category_name, products.product_name, pro
 
 -- name: CreateCategory :one
 INSERT INTO categories (
-    category_id,
     category_name
 ) VALUES (
-    $1, $2
+    $1
 ) RETURNING *;

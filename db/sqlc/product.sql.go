@@ -12,20 +12,14 @@ import (
 
 const createCategory = `-- name: CreateCategory :one
 INSERT INTO categories (
-    category_id,
     category_name
 ) VALUES (
-    $1, $2
+    $1
 ) RETURNING category_id, category_name
 `
 
-type CreateCategoryParams struct {
-	CategoryID   int64  `json:"category_id"`
-	CategoryName string `json:"category_name"`
-}
-
-func (q *Queries) CreateCategory(ctx context.Context, arg CreateCategoryParams) (Category, error) {
-	row := q.db.QueryRowContext(ctx, createCategory, arg.CategoryID, arg.CategoryName)
+func (q *Queries) CreateCategory(ctx context.Context, categoryName string) (Category, error) {
+	row := q.db.QueryRowContext(ctx, createCategory, categoryName)
 	var i Category
 	err := row.Scan(&i.CategoryID, &i.CategoryName)
 	return i, err
