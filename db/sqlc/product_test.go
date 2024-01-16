@@ -82,3 +82,17 @@ func TestCreateCart(t *testing.T) {
 
 	fmt.Println("Result:", res.CartID)
 }
+
+func TestFindCart(t *testing.T) {
+	res, err := testQueries.FindCart(context.Background(), "John DOe")
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	for _, items := range res {
+		fmt.Println("-------------------------------")
+		fmt.Println("Customer Name:", items.CustomerName)
+		fmt.Println("Product:", items.ProductName)
+	}
+}
