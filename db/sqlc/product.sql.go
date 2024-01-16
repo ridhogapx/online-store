@@ -89,6 +89,42 @@ func (q *Queries) CreateProduct(ctx context.Context, arg CreateProductParams) (P
 	return i, err
 }
 
+const findCart = `-- name: FindCart :many
+SELECT shopping_carts.cart_id, customers.customer_name, products.product_name FROM shopping_carts
+    INNER JOIN customers ON shopping_carts.customer_id=customers.customer_id
+    INNER JOIN products on shopping_carts.product_id=products.product_id
+    WHERE customers.customer_name=$1
+`
+
+type FindCartRow struct {
+	CartID       string `json:"cart_id"`
+	CustomerName string `json:"customer_name"`
+	ProductName  string `json:"product_name"`
+}
+
+func (q *Queries) FindCart(ctx context.Context, customerName string) ([]FindCartRow, error) {
+	rows, err := q.db.QueryContext(ctx, findCart, customerName)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []FindCartRow
+	for rows.Next() {
+		var i FindCartRow
+		if err := rows.Scan(&i.CartID, &i.CustomerName, &i.ProductName); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const findProductByCategory = `-- name: FindProductByCategory :many
 SELECT products.product_id, categories.category_name, products.product_name, products.price, products.created_at FROM products INNER JOIN categories ON products.category_id=categories.category_id WHERE products.category_id=$1
 `
