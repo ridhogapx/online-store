@@ -50,3 +50,21 @@ func TestFindingProduct(t *testing.T) {
 		fmt.Println("------------------------------------------------------")
 	}
 }
+
+func TestCreateCustomer(t *testing.T) {
+	res, err := testQueries.CreateCustomer(context.Background(), CreateCustomerParams{
+		// Dummy data for testing queries
+		CustomerID:      uuid.NewString(),
+		CustomerName:    "Jne",
+		CustomerAddress: "Jl. Soda 53",
+		Email:           "jane@does.com",
+		// Just plain text for testing query
+		Password: "myverysecret",
+	})
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	fmt.Println("Result:", res.CustomerName)
+}
