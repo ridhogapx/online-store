@@ -7,7 +7,7 @@ CREATE TABLE "products" (
 );
 
 CREATE TABLE "categories" (
-  "id" varchar PRIMARY KEY NOT NULL,
+  "id" BIGSERIAL PRIMARY KEY NOT NULL,
   "name" varchar NOT NULL
 );
 
