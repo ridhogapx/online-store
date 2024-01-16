@@ -10,6 +10,34 @@ import (
 	"time"
 )
 
+const createCart = `-- name: CreateCart :one
+INSERT into shopping_carts (
+    cart_id,
+    customer_id, 
+    product_id
+) VALUES (
+    $1, $2, $3
+) RETURNING cart_id, customer_id, product_id, created_at
+`
+
+type CreateCartParams struct {
+	CartID     string `json:"cart_id"`
+	CustomerID string `json:"customer_id"`
+	ProductID  string `json:"product_id"`
+}
+
+func (q *Queries) CreateCart(ctx context.Context, arg CreateCartParams) (ShoppingCart, error) {
+	row := q.db.QueryRowContext(ctx, createCart, arg.CartID, arg.CustomerID, arg.ProductID)
+	var i ShoppingCart
+	err := row.Scan(
+		&i.CartID,
+		&i.CustomerID,
+		&i.ProductID,
+		&i.CreatedAt,
+	)
+	return i, err
+}
+
 const createCategory = `-- name: CreateCategory :one
 INSERT INTO categories (
     category_name
