@@ -10,6 +10,27 @@ import (
 	"time"
 )
 
+const createCategory = `-- name: CreateCategory :one
+INSERT INTO categories (
+    category_id,
+    category_name
+) VALUES (
+    $1, $2
+) RETURNING category_id, category_name
+`
+
+type CreateCategoryParams struct {
+	CategoryID   int64  `json:"category_id"`
+	CategoryName string `json:"category_name"`
+}
+
+func (q *Queries) CreateCategory(ctx context.Context, arg CreateCategoryParams) (Category, error) {
+	row := q.db.QueryRowContext(ctx, createCategory, arg.CategoryID, arg.CategoryName)
+	var i Category
+	err := row.Scan(&i.CategoryID, &i.CategoryName)
+	return i, err
+}
+
 const createProduct = `-- name: CreateProduct :one
 INSERT INTO products (
     product_id,
