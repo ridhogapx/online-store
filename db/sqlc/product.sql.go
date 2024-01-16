@@ -47,7 +47,7 @@ func (q *Queries) CreateProduct(ctx context.Context, arg CreateProductParams) (P
 }
 
 const findProductByCategory = `-- name: FindProductByCategory :many
-SELECT products.id, categories.name, products.name, products.price, products.created_at FROM products INNER JOIN categories ON products.category_id=categories.id
+SELECT products.id, categories.name, products.name, products.price, products.created_at FROM products INNER JOIN categories ON products.category_id=categories.id WHERE products.category_id=$1
 `
 
 type FindProductByCategoryRow struct {
@@ -58,8 +58,8 @@ type FindProductByCategoryRow struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
-func (q *Queries) FindProductByCategory(ctx context.Context) ([]FindProductByCategoryRow, error) {
-	rows, err := q.db.QueryContext(ctx, findProductByCategory)
+func (q *Queries) FindProductByCategory(ctx context.Context, categoryID string) ([]FindProductByCategoryRow, error) {
+	rows, err := q.db.QueryContext(ctx, findProductByCategory, categoryID)
 	if err != nil {
 		return nil, err
 	}
