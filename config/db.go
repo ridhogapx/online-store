@@ -5,13 +5,14 @@ import (
 	"log"
 
 	db "github.com/RageNeko26/online-store/db/sqlc"
+	_ "github.com/lib/pq"
 )
 
-func NewDBConnection(driver string, source string) *db.Queries {
-	sqlDB, err := sql.Open(driver, source)
+func NewDBConnection(source string) *db.Queries {
+	sqlDB, err := sql.Open("postgres", source)
 
 	if err != nil {
-		log.Fatal("Failed to connect database")
+		log.Fatalf("Failed to connect database: %s", err.Error())
 	}
 
 	q := db.New(sqlDB)
