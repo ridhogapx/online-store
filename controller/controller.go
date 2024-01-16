@@ -23,5 +23,6 @@ func Setup(app *fiber.App, q *db.Queries) *Controller {
 }
 
 func (controller *Controller) Routes() {
-	controller.App.Get("/", controller.GetProductByCategory)
+	v1 := controller.App.Group("/api/v1")
+	v1.Get("/product", controller.GetProductByCategory)
 }
