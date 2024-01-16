@@ -68,3 +68,17 @@ func TestCreateCustomer(t *testing.T) {
 
 	fmt.Println("Result:", res.CustomerName)
 }
+
+func TestCreateCart(t *testing.T) {
+	res, err := testQueries.CreateCart(context.Background(), CreateCartParams{
+		CartID:     uuid.NewString(),
+		CustomerID: "1e354f60-168c-4036-8643-e32699215aaa",
+		ProductID:  "ee1407bd-254d-4dcf-9903-01ee3542d77a",
+	})
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	fmt.Println("Result:", res.CartID)
+}
