@@ -47,3 +47,20 @@ func (q *Queries) CreateCustomer(ctx context.Context, arg CreateCustomerParams) 
 	)
 	return i, err
 }
+
+const findCustomerByEmail = `-- name: FindCustomerByEmail :one
+SELECT email, password FROM customers
+WHERE email=$1
+`
+
+type FindCustomerByEmailRow struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+func (q *Queries) FindCustomerByEmail(ctx context.Context, email string) (FindCustomerByEmailRow, error) {
+	row := q.db.QueryRowContext(ctx, findCustomerByEmail, email)
+	var i FindCustomerByEmailRow
+	err := row.Scan(&i.Email, &i.Password)
+	return i, err
+}

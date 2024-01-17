@@ -8,3 +8,7 @@ INSERT INTO customers (
 ) VALUES (
     $1, $2, $3, $4, $5
 ) RETURNING *;
+
+-- name: FindCustomerByEmail :one
+SELECT email, password FROM customers
+WHERE email=$1;
