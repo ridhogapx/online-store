@@ -92,3 +92,38 @@ func (controller *Controller) FindCarts(c *fiber.Ctx) {
 		Products:      cart,
 	})
 }
+
+func (controller *Controller) DeleteCart(c *fiber.Ctx) {
+	param_id := c.Params("cart_id")
+	authorization := c.Get("authorization")
+
+	// Validate authorization
+	_, err := utils.DecodeToken(authorization, controller.Secret)
+
+	if err != nil {
+		c.Status(http.StatusForbidden)
+		c.JSON(Response{
+			Message: "Forbidden",
+			Status:  "fail",
+		})
+		return
+	}
+
+	// If authorization is valid, do DELETE operation
+	err = controller.Q.DeleteCart(context.Background(), param_id)
+
+	if err != nil {
+		c.Status(http.StatusInternalServerError)
+		c.JSON(Response{
+			Message: "Failed to delete cart items",
+			Status:  "fail",
+		})
+		return
+	}
+
+	c.Status(http.StatusOK)
+	c.JSON(Response{
+		Message: "Cart successfully deleted!",
+		Status:  "success",
+	})
+}
