@@ -41,28 +41,6 @@ func (controller *Controller) GetProductByCategory(c *fiber.Ctx) {
 
 }
 
-func (controller *Controller) CreateCategory(c *fiber.Ctx) {
-	var bodyRequest CreateCategoryRequest
-
-	c.BodyParser(&bodyRequest)
-
-	res, err := controller.Q.CreateCategory(context.Background(), bodyRequest.CategoryName)
-
-	if err != nil {
-		c.Status(http.StatusInternalServerError)
-
-		c.JSON(Response{
-			Message: "Failed to create category",
-			Status:  "fail",
-		})
-
-		return
-	}
-
-	c.Status(http.StatusCreated)
-	c.JSON(res)
-}
-
 func (controller *Controller) CreateProduct(c *fiber.Ctx) {
 	var bodyRequest CreateProductRequest
 
