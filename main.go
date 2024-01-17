@@ -13,11 +13,16 @@ func main() {
 	app := fiber.New()
 
 	// Load up environment variable
-	DB_SOURCE := os.Getenv("DB_SOURCE")
 	SECRET := os.Getenv("SECRET")
 
 	// Initialize configuration
-	q := config.NewDBConnection(DB_SOURCE)
+	q := config.NewDBConnection(&config.DBCredentials{
+		User:     os.Getenv("DB_USER"),
+		Password: os.Getenv("DB_PASSWORD"),
+		Host:     os.Getenv("DB_HOST"),
+		Port:     os.Getenv("DB_PORT"),
+		DBName:   os.Getenv("DB_NAME"),
+	})
 
 	controller := controller.Setup(app, q, []byte(SECRET))
 	// Initialize route
