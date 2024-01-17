@@ -29,6 +29,9 @@ func (controller *Controller) Routes() {
 	// Product Route
 	v1.Get("/products", controller.GetProductByCategory)
 
+	// Category Route
+	v1.Post("/categories", controller.CreateCategory)
+
 	// Shopping cart route
 	v1.Post("/carts", controller.CreateCart)
 	v1.Get("/carts", controller.FindCarts)

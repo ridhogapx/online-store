@@ -31,3 +31,7 @@ type CartResponse struct {
 	TotalQuantity int64            `json:"total_quantity"`
 	Products      []db.FindCartRow `json:"products"`
 }
+
+type CreateCategoryRequest struct {
+	CategoryName string `json:"category_name"`
+}
