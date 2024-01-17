@@ -1,0 +1,39 @@
+version: '3'
+services:
+  app:
+    container_name: online_store
+    environment:
+      - DB_USER="root"
+      - DB_PASSWORD="root"
+      - DB_HOST="localhost"
+      - DB_PORT="5432"
+      - DB_NAME="online_store"
+    tty: true
+    build: .
+    ports:
+      - 3000:3000
+    restart: on-failure
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres_db
+    networks:
+      - synapsis_net
+
+  postgres_db:
+    image: postgres:16-alpine
+    container_name: pg_container
+    ports:
+      - 5432:5432
+    networks:
+      - synapsis_net
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data 
+    
+volumes: 
+  pg_data:
+
+networks:
+  synapsis_net:
+    driver: bridge
+   
