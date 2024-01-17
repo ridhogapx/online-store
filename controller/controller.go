@@ -11,10 +11,11 @@ type Controller struct {
 	Secret []byte
 }
 
-func Setup(app *fiber.App, q *db.Queries) *Controller {
+func Setup(app *fiber.App, q *db.Queries, secret []byte) *Controller {
 	return &Controller{
-		App: app,
-		Q:   q,
+		App:    app,
+		Q:      q,
+		Secret: secret,
 	}
 }
 
@@ -23,6 +24,7 @@ func (controller *Controller) Routes() {
 
 	// Customer Route
 	v1.Post("/register", controller.Register)
+	v1.Post("/login", controller.Login)
 
 	// Product Route
 	v1.Get("/product", controller.GetProductByCategory)
