@@ -15,10 +15,24 @@ func (controller *Controller) Register(c *fiber.Ctx) {
 
 	c.BodyParser(&bodyRequest)
 
+	// Check existing customer
+	// If customer is already exist, then return fail response
+	_, err := controller.Q.FindCustomerByEmail(context.Background(), bodyRequest.Email)
+
+	if err == nil {
+		c.Status(http.StatusInternalServerError)
+		c.JSON(Response{
+			Message: "Customer is already registered",
+			Status:  "fail",
+		})
+
+		return
+	}
+
 	pass := []byte(bodyRequest.Password)
 	hash, _ := bcrypt.GenerateFromPassword(pass, bcrypt.DefaultCost)
 
-	_, err := controller.Q.CreateCustomer(context.Background(), db.CreateCustomerParams{
+	_, err = controller.Q.CreateCustomer(context.Background(), db.CreateCustomerParams{
 		CustomerID:      uuid.New().String(),
 		CustomerName:    bodyRequest.Name,
 		CustomerAddress: bodyRequest.Address,
