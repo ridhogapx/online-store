@@ -62,5 +62,10 @@ func (controller *Controller) CreateTransaction(c *fiber.Ctx) {
 	}
 
 	c.Status(http.StatusCreated)
-	c.JSON(total)
+	c.JSON(CreateTransactionResponse{
+		Products:      cart,
+		TransactionID: total.TransactionID,
+		TotalPrice:    totalPrice,
+		CreatedAt:     total.CreatedAt,
+	})
 }

@@ -1,6 +1,10 @@
 package controller
 
-import db "github.com/RageNeko26/online-store/db/sqlc"
+import (
+	"time"
+
+	db "github.com/RageNeko26/online-store/db/sqlc"
+)
 
 type Response struct {
 	Message string `json:"message"`
@@ -40,4 +44,11 @@ type CreateProductRequest struct {
 	CategoryID  int64  `json:"category_id"`
 	ProductName string `json:"product_name"`
 	Price       int64  `json:"price"`
+}
+
+type CreateTransactionResponse struct {
+	Products      []db.FindCartRow `json:"products"`
+	TransactionID string           `json:"transaction_id"`
+	TotalPrice    int64            `json:"total_price"`
+	CreatedAt     time.Time        `json:"created_at"`
 }
