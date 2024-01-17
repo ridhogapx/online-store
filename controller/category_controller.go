@@ -28,3 +28,19 @@ func (controller *Controller) CreateCategory(c *fiber.Ctx) {
 	c.Status(http.StatusCreated)
 	c.JSON(res)
 }
+
+func (controller *Controller) FindCategories(c *fiber.Ctx) {
+	res, err := controller.Q.FindAllCategories(context.Background())
+
+	if err != nil {
+		c.Status(http.StatusInternalServerError)
+		c.JSON(Response{
+			Message: "Category is not empty",
+			Status:  "fail",
+		})
+		return
+	}
+
+	c.Status(http.StatusOK)
+	c.JSON(res)
+}

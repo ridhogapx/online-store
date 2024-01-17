@@ -32,6 +32,7 @@ func (controller *Controller) Routes() {
 
 	// Category Route
 	v1.Post("/categories", controller.CreateCategory)
+	v1.Get("/categories", controller.FindCategories)
 
 	// Shopping cart route
 	v1.Post("/carts", controller.CreateCart)
