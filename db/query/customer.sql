@@ -10,5 +10,5 @@ INSERT INTO customers (
 ) RETURNING *;
 
 -- name: FindCustomerByEmail :one
-SELECT email, password FROM customers
+SELECT customer_id, customer_name, email, password FROM customers
 WHERE email=$1;
