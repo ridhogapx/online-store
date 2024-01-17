@@ -25,7 +25,7 @@ func TestGenToken(t *testing.T) {
 }
 
 func TestDecode(t *testing.T) {
-	err := DecodeToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDU0NzY5NTAsImlzcyI6IlN5bmFwc2lzIE9ubGluZSBTdG9yZSIsImN1c3RvbWVyX2lkIjoiZm9vLWlkLXh4IiwiY3VzdG9tZXJfbmFtZSI6IkZvbyIsImVtYWlsIjoiZm9vQG1haWwuY29tIn0.2bE5pNMBkMMgvqWERPpJT4R3WM89x9debJte1kmd4xE", testSecret)
+	_, err := DecodeToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDU0NzY5NTAsImlzcyI6IlN5bmFwc2lzIE9ubGluZSBTdG9yZSIsImN1c3RvbWVyX2lkIjoiZm9vLWlkLXh4IiwiY3VzdG9tZXJfbmFtZSI6IkZvbyIsImVtYWlsIjoiZm9vQG1haWwuY29tIn0.2bE5pNMBkMMgvqWERPpJT4R3WM89x9debJte1kmd4xE", testSecret)
 
 	if err != nil {
 		t.Error(err)

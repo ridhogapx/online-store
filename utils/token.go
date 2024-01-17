@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
@@ -51,18 +50,16 @@ func GenerateToken(payload Payload) (string, error) {
 
 }
 
-func DecodeToken(tokenRequest string, secret []byte) error {
+func DecodeToken(tokenRequest string, secret []byte) (*Claims, error) {
 	token, err := jwt.ParseWithClaims(tokenRequest, &Claims{}, func(t *jwt.Token) (interface{}, error) {
 		return secret, nil
 	})
 
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	claims := token.Claims.(*Claims)
 
-	fmt.Println("Customer ID:", claims.CustomerID)
-
-	return nil
+	return claims, nil
 }
