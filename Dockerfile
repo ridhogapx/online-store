@@ -1,7 +1,7 @@
 FROM golang:1.20.6-alpine3.18
 
 RUN mkdir /online-store
-WOKRDIR /online-store
+WORKDIR /online-store
 
 COPY go.mod /online-store
 
