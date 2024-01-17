@@ -7,6 +7,7 @@ import (
 	db "github.com/RageNeko26/online-store/db/sqlc"
 	"github.com/gofiber/fiber"
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func (controller *Controller) Register(c *fiber.Ctx) {
@@ -14,12 +15,15 @@ func (controller *Controller) Register(c *fiber.Ctx) {
 
 	c.BodyParser(&bodyRequest)
 
+	pass := []byte(bodyRequest.Password)
+	hash, _ := bcrypt.GenerateFromPassword(pass, bcrypt.DefaultCost)
+
 	_, err := controller.Q.CreateCustomer(context.Background(), db.CreateCustomerParams{
 		CustomerID:      uuid.New().String(),
 		CustomerName:    bodyRequest.Name,
 		CustomerAddress: bodyRequest.Address,
 		Email:           bodyRequest.Email,
-		Password:        bodyRequest.Password,
+		Password:        string(hash),
 	})
 
 	if err != nil {
