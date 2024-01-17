@@ -37,6 +37,15 @@ func (q *Queries) CreateCart(ctx context.Context, arg CreateCartParams) (Shoppin
 	return i, err
 }
 
+const deleteCart = `-- name: DeleteCart :exec
+DELETE FROM shopping_carts WHERE shopping_carts.cart_id=$1
+`
+
+func (q *Queries) DeleteCart(ctx context.Context, cartID string) error {
+	_, err := q.db.ExecContext(ctx, deleteCart, cartID)
+	return err
+}
+
 const findCart = `-- name: FindCart :many
 SELECT shopping_carts.cart_id, customers.customer_name, products.product_name, products.price FROM shopping_carts
     INNER JOIN customers ON shopping_carts.customer_id=customers.customer_id
