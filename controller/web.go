@@ -20,3 +20,7 @@ type LoginRequest struct {
 type LoginResponse struct {
 	Token string `json:"token"`
 }
+
+type CreateCartRequest struct {
+	ProductID string `json:"product_id"`
+}

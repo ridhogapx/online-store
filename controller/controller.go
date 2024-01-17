@@ -28,4 +28,8 @@ func (controller *Controller) Routes() {
 
 	// Product Route
 	v1.Get("/products", controller.GetProductByCategory)
+
+	// Shopping cart route
+	v1.Post("/carts")
+
 }
