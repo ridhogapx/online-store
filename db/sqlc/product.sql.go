@@ -61,6 +61,33 @@ func (q *Queries) CreateProduct(ctx context.Context, arg CreateProductParams) (P
 	return i, err
 }
 
+const findAllCategories = `-- name: FindAllCategories :many
+SELECT category_id, category_name FROM categories
+`
+
+func (q *Queries) FindAllCategories(ctx context.Context) ([]Category, error) {
+	rows, err := q.db.QueryContext(ctx, findAllCategories)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Category
+	for rows.Next() {
+		var i Category
+		if err := rows.Scan(&i.CategoryID, &i.CategoryName); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const findProductByCategory = `-- name: FindProductByCategory :many
 SELECT products.product_id, categories.category_name, products.product_name, products.price, products.created_at FROM products INNER JOIN categories ON products.category_id=categories.category_id WHERE products.category_id=$1
 `

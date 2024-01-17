@@ -17,3 +17,7 @@ INSERT INTO categories (
 ) VALUES (
     $1
 ) RETURNING *;
+
+
+-- name: FindAllCategories :many
+SELECT category_id, category_name FROM categories;
