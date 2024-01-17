@@ -35,3 +35,9 @@ type CartResponse struct {
 type CreateCategoryRequest struct {
 	CategoryName string `json:"category_name"`
 }
+
+type CreateProductRequest struct {
+	CategoryID  int64  `json:"category_id"`
+	ProductName string `json:"product_name"`
+	Price       int64  `json:"price"`
+}

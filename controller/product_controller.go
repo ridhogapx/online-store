@@ -5,7 +5,9 @@ import (
 	"net/http"
 	"strconv"
 
+	db "github.com/RageNeko26/online-store/db/sqlc"
 	"github.com/gofiber/fiber"
+	"github.com/google/uuid"
 )
 
 func (controller *Controller) GetProductByCategory(c *fiber.Ctx) {
@@ -54,6 +56,31 @@ func (controller *Controller) CreateCategory(c *fiber.Ctx) {
 			Status:  "fail",
 		})
 
+		return
+	}
+
+	c.Status(http.StatusCreated)
+	c.JSON(res)
+}
+
+func (controller *Controller) CreateProduct(c *fiber.Ctx) {
+	var bodyRequest CreateProductRequest
+
+	c.BodyParser(&bodyRequest)
+
+	res, err := controller.Q.CreateProduct(context.Background(), db.CreateProductParams{
+		ProductID:   uuid.NewString(),
+		CategoryID:  bodyRequest.CategoryID,
+		ProductName: bodyRequest.ProductName,
+		Price:       bodyRequest.Price,
+	})
+
+	if err != nil {
+		c.Status(http.StatusInternalServerError)
+		c.JSON(Response{
+			Message: "Failed to create product",
+			Status:  "fail",
+		})
 		return
 	}
 
