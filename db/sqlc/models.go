@@ -5,7 +5,6 @@
 package db
 
 import (
-	"database/sql"
 	"time"
 )
 
@@ -38,7 +37,9 @@ type ShoppingCart struct {
 }
 
 type TransactionReport struct {
-	TransactionID string         `json:"transaction_id"`
-	CartID        sql.NullString `json:"cart_id"`
-	CreatedAt     time.Time      `json:"created_at"`
+	TransactionID string    `json:"transaction_id"`
+	CartID        string    `json:"cart_id"`
+	ProductID     string    `json:"product_id"`
+	TotalPrice    int64     `json:"total_price"`
+	CreatedAt     time.Time `json:"created_at"`
 }
