@@ -6,8 +6,9 @@ import (
 )
 
 type Controller struct {
-	App *fiber.App
-	Q   *db.Queries
+	App    *fiber.App
+	Q      *db.Queries
+	Secret []byte
 }
 
 func Setup(app *fiber.App, q *db.Queries) *Controller {
