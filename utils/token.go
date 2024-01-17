@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
@@ -20,6 +21,8 @@ type Payload struct {
 	Secret       []byte
 }
 
+var signingMethod = jwt.SigningMethodHS256
+
 func GenerateToken(payload Payload) (string, error) {
 	exp := time.Duration(1) * time.Hour
 
@@ -32,8 +35,6 @@ func GenerateToken(payload Payload) (string, error) {
 		CustomerName: payload.CustomerName,
 		Email:        payload.Email,
 	}
-
-	signingMethod := jwt.SigningMethodHS256
 
 	token := jwt.NewWithClaims(
 		signingMethod,
@@ -48,4 +49,20 @@ func GenerateToken(payload Payload) (string, error) {
 
 	return signedToken, nil
 
+}
+
+func DecodeToken(tokenRequest string, secret []byte) error {
+	token, err := jwt.ParseWithClaims(tokenRequest, &Claims{}, func(t *jwt.Token) (interface{}, error) {
+		return secret, nil
+	})
+
+	if err != nil {
+		return err
+	}
+
+	claims := token.Claims.(*Claims)
+
+	fmt.Println("Customer ID:", claims.CustomerID)
+
+	return nil
 }
