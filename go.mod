@@ -4,16 +4,17 @@ go 1.21.3
 
 require (
 	github.com/gofiber/fiber v1.14.6
+	github.com/golang-jwt/jwt/v4 v4.2.0
 	github.com/google/uuid v1.5.0
+	github.com/joho/godotenv v1.5.1
 	github.com/lib/pq v1.10.9
+	golang.org/x/crypto v0.14.0
 )
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/gofiber/utils v0.0.10 // indirect
-	github.com/golang-jwt/jwt/v4 v4.2.0 // indirect
 	github.com/gorilla/schema v1.1.0 // indirect
-	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/klauspost/compress v1.17.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
