@@ -33,4 +33,7 @@ func (controller *Controller) Routes() {
 	v1.Post("/carts", controller.CreateCart)
 	v1.Get("/carts", controller.FindCarts)
 	v1.Delete("/carts/:cart_id", controller.DeleteCart)
+
+	// Transaction Report
+	v1.Post("/checkout", controller.CreateTransaction)
 }
