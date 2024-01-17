@@ -38,8 +38,7 @@ type ShoppingCart struct {
 
 type TransactionReport struct {
 	TransactionID string    `json:"transaction_id"`
-	CartID        string    `json:"cart_id"`
-	ProductID     string    `json:"product_id"`
+	CustomerID    string    `json:"customer_id"`
 	TotalPrice    int64     `json:"total_price"`
 	CreatedAt     time.Time `json:"created_at"`
 }

@@ -12,33 +12,25 @@ import (
 const createTransactionReport = `-- name: CreateTransactionReport :one
 INSERT INTO transaction_reports (
     transaction_id,
-    cart_id,
-    product_id,
+    customer_id,
     total_price
 ) VALUES (
-    $1, $2, $3, $4
-) RETURNING transaction_id, cart_id, product_id, total_price, created_at
+    $1, $2, $3
+) RETURNING transaction_id, customer_id, total_price, created_at
 `
 
 type CreateTransactionReportParams struct {
 	TransactionID string `json:"transaction_id"`
-	CartID        string `json:"cart_id"`
-	ProductID     string `json:"product_id"`
+	CustomerID    string `json:"customer_id"`
 	TotalPrice    int64  `json:"total_price"`
 }
 
 func (q *Queries) CreateTransactionReport(ctx context.Context, arg CreateTransactionReportParams) (TransactionReport, error) {
-	row := q.db.QueryRowContext(ctx, createTransactionReport,
-		arg.TransactionID,
-		arg.CartID,
-		arg.ProductID,
-		arg.TotalPrice,
-	)
+	row := q.db.QueryRowContext(ctx, createTransactionReport, arg.TransactionID, arg.CustomerID, arg.TotalPrice)
 	var i TransactionReport
 	err := row.Scan(
 		&i.TransactionID,
-		&i.CartID,
-		&i.ProductID,
+		&i.CustomerID,
 		&i.TotalPrice,
 		&i.CreatedAt,
 	)
