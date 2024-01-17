@@ -22,11 +22,12 @@ func main() {
 
 	// Load up environment variable
 	DB_SOURCE := os.Getenv("DB_SOURCE")
+	SECRET := os.Getenv("SECRET")
 
 	// Initialize configuration
 	q := config.NewDBConnection(DB_SOURCE)
 
-	controller := controller.Setup(app, q)
+	controller := controller.Setup(app, q, []byte(SECRET))
 	// Initialize route
 	controller.Routes()
 
