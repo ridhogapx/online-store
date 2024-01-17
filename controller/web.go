@@ -29,6 +29,5 @@ type CreateCartRequest struct {
 
 type CartResponse struct {
 	TotalQuantity int64            `json:"total_quantity"`
-	TotalPrice    int64            `json:"total_price"`
 	Products      []db.FindCartRow `json:"products"`
 }

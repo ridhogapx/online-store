@@ -79,16 +79,10 @@ func (controller *Controller) FindCarts(c *fiber.Ctx) {
 	}
 
 	quantity := len(cart)
-	var total_price int64
-
-	for _, items := range cart {
-		total_price += items.Price
-	}
 
 	c.Status(http.StatusOK)
 	c.JSON(CartResponse{
 		TotalQuantity: int64(quantity),
-		TotalPrice:    total_price,
 		Products:      cart,
 	})
 }
