@@ -29,6 +29,7 @@ services:
       - synapsis_net
     volumes:
       - ./pg_data:/var/lib/postgresql/data 
+    command: createdb online_store
     
 volumes: 
   pg_data:
