@@ -38,20 +38,21 @@ func (q *Queries) CreateCart(ctx context.Context, arg CreateCartParams) (Shoppin
 }
 
 const findCart = `-- name: FindCart :many
-SELECT shopping_carts.cart_id, customers.customer_name, products.product_name FROM shopping_carts
+SELECT shopping_carts.cart_id, customers.customer_name, products.product_name, products.price FROM shopping_carts
     INNER JOIN customers ON shopping_carts.customer_id=customers.customer_id
     INNER JOIN products on shopping_carts.product_id=products.product_id
-    WHERE customers.customer_name=$1
+    WHERE customers.customer_id=$1
 `
 
 type FindCartRow struct {
 	CartID       string `json:"cart_id"`
 	CustomerName string `json:"customer_name"`
 	ProductName  string `json:"product_name"`
+	Price        int64  `json:"price"`
 }
 
-func (q *Queries) FindCart(ctx context.Context, customerName string) ([]FindCartRow, error) {
-	rows, err := q.db.QueryContext(ctx, findCart, customerName)
+func (q *Queries) FindCart(ctx context.Context, customerID string) ([]FindCartRow, error) {
+	rows, err := q.db.QueryContext(ctx, findCart, customerID)
 	if err != nil {
 		return nil, err
 	}
@@ -59,7 +60,12 @@ func (q *Queries) FindCart(ctx context.Context, customerName string) ([]FindCart
 	var items []FindCartRow
 	for rows.Next() {
 		var i FindCartRow
-		if err := rows.Scan(&i.CartID, &i.CustomerName, &i.ProductName); err != nil {
+		if err := rows.Scan(
+			&i.CartID,
+			&i.CustomerName,
+			&i.ProductName,
+			&i.Price,
+		); err != nil {
 			return nil, err
 		}
 		items = append(items, i)

@@ -84,7 +84,7 @@ func TestCreateCart(t *testing.T) {
 }
 
 func TestFindCart(t *testing.T) {
-	res, err := testQueries.FindCart(context.Background(), "John DOe")
+	res, err := testQueries.FindCart(context.Background(), "foo-id-xxx")
 
 	if err != nil {
 		t.Error(err)

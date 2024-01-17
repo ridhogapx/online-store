@@ -50,3 +50,45 @@ func (controller *Controller) CreateCart(c *fiber.Ctx) {
 		Status:  "success",
 	})
 }
+
+func (controller *Controller) FindCarts(c *fiber.Ctx) {
+	authorization := c.Get("Authorization")
+
+	// Validate authorization
+	res, err := utils.DecodeToken(authorization, controller.Secret)
+
+	if err != nil {
+		c.Status(http.StatusForbidden)
+		c.JSON(Response{
+			Message: "Forbidden",
+			Status:  "fail",
+		})
+		return
+	}
+
+	// Find Cart by Customer Name
+	cart, err := controller.Q.FindCart(context.Background(), res.CustomerID)
+
+	if err != nil {
+		c.Status(http.StatusOK)
+		c.JSON(Response{
+			Message: "Customer is not yet adding product into shopping cart",
+			Status:  "success",
+		})
+		return
+	}
+
+	quantity := len(cart)
+	var total_price int64
+
+	for _, items := range cart {
+		total_price += items.Price
+	}
+
+	c.Status(http.StatusOK)
+	c.JSON(CartResponse{
+		TotalQuantity: int64(quantity),
+		TotalPrice:    total_price,
+		Products:      cart,
+	})
+}

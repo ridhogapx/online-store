@@ -31,5 +31,5 @@ func (controller *Controller) Routes() {
 
 	// Shopping cart route
 	v1.Post("/carts", controller.CreateCart)
-
+	v1.Get("/carts", controller.FindCarts)
 }
