@@ -27,5 +27,5 @@ func (controller *Controller) Routes() {
 	v1.Post("/login", controller.Login)
 
 	// Product Route
-	v1.Get("/product", controller.GetProductByCategory)
+	v1.Get("/products", controller.GetProductByCategory)
 }
