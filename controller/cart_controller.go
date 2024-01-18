@@ -127,7 +127,7 @@ func (controller *Controller) FindCarts(c *fiber.Ctx) error {
 //	@Router			/api/v1/carts/{cart_id} [delete]
 func (controller *Controller) DeleteCart(c *fiber.Ctx) error {
 	param_id := c.Params("cart_id")
-	authorization := c.Get("authorization")
+	authorization := c.Get("Authorization")
 
 	// Validate authorization
 	_, err := utils.DecodeToken(authorization, controller.Secret)
