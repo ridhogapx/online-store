@@ -18,6 +18,7 @@ import (
 //	@Accept			json
 //	@Produce 		json
 //	@Param 			cart body					CreateCartRequest		true		"add cart"
+//	@Param			Authorization header	string true "authorization token customer"
 //	@Success		201							{object} CartResponse
 //	@Failure		403							{object} Response
 //	@Failure		500							{object} Response
@@ -72,7 +73,7 @@ func (controller *Controller) CreateCart(c *fiber.Ctx) error {
 //	@Tags			Shopping Cart
 //	@Accept			json
 //	@Produce 		json
-//	@Security		Authorization
+//	@Param			Authorization header	string true "authorization token customer"
 //	@Success		200							{object} CartResponse
 //	@Failure		403							{object} Response
 //	@Router			/carts [get]
@@ -120,7 +121,7 @@ func (controller *Controller) FindCarts(c *fiber.Ctx) error {
 //	@Tags			Shopping Cart
 //	@Param			cart_id	path	string true	"Cart ID"
 //	@Produce 		json
-//	@Security		Authorization
+//	@Param			Authorization header	string true "authorization token customer"
 //	@Success		200							{object} CartResponse
 //	@Failure		403							{object} Response
 //	@Failure		500							{object} Response

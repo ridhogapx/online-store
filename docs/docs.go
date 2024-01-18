@@ -17,11 +17,6 @@ const docTemplate = `{
     "paths": {
         "/carts": {
             "get": {
-                "security": [
-                    {
-                        "Authorization": []
-                    }
-                ],
                 "description": "Listing all of products that customer have been add.",
                 "consumes": [
                     "application/json"
@@ -33,6 +28,15 @@ const docTemplate = `{
                     "Shopping Cart"
                 ],
                 "summary": "Find existing cart.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "authorization token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -69,6 +73,13 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/controller.CreateCartRequest"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "authorization token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -95,11 +106,6 @@ const docTemplate = `{
         },
         "/carts/{cart_id}": {
             "delete": {
-                "security": [
-                    {
-                        "Authorization": []
-                    }
-                ],
                 "description": "Delete selected cart item by id.",
                 "produces": [
                     "application/json"
@@ -114,6 +120,13 @@ const docTemplate = `{
                         "description": "Cart ID",
                         "name": "cart_id",
                         "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "authorization token",
+                        "name": "Authorization",
+                        "in": "header",
                         "required": true
                     }
                 ],

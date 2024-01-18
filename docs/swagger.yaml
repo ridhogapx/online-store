@@ -96,6 +96,12 @@ paths:
       consumes:
       - application/json
       description: Listing all of products that customer have been add.
+      parameters:
+      - description: authorization token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -107,8 +113,6 @@ paths:
           description: Forbidden
           schema:
             $ref: '#/definitions/controller.Response'
-      security:
-      - Authorization: []
       summary: Find existing cart.
       tags:
       - Shopping Cart
@@ -123,6 +127,11 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/controller.CreateCartRequest'
+      - description: authorization token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -150,6 +159,11 @@ paths:
         name: cart_id
         required: true
         type: string
+      - description: authorization token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -165,8 +179,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/controller.Response'
-      security:
-      - Authorization: []
       summary: Delete existing cart.
       tags:
       - Shopping Cart
