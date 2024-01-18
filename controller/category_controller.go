@@ -17,7 +17,7 @@ import (
 //	@Param 			category body				CreateCategoryRequest		true		"add category"
 //	@Success		201							{object} db.Category
 //	@Failure		500							{object} Response
-//	@Router			/api/v1/categories [post]
+//	@Router			/categories [post]
 func (controller *Controller) CreateCategory(c *fiber.Ctx) error {
 	var bodyRequest CreateCategoryRequest
 
@@ -48,7 +48,7 @@ func (controller *Controller) CreateCategory(c *fiber.Ctx) error {
 //	@Produce 		json
 //	@Success		200							{object} []db.Category
 //	@Failure		404							{object} Response
-//	@Router			/api/v1/categories [get]
+//	@Router			/categories [get]
 func (controller *Controller) FindCategories(c *fiber.Ctx) error {
 	res, err := controller.Q.FindAllCategories(context.Background())
 

@@ -23,7 +23,7 @@ import (
 //	@Success		201							{object} Response
 //	@Failure		500							{object} Response
 //	@Failure		400							{object} Response
-//	@Router			/api/v1/register [post]
+//	@Router			/register [post]
 func (controller *Controller) Register(c *fiber.Ctx) error {
 	var bodyRequest RegisterRequest
 
@@ -83,7 +83,7 @@ func (controller *Controller) Register(c *fiber.Ctx) error {
 //	@Failure		500							{object} Response
 //	@Failure		404							{object} Response
 //	@Failure		400							{object} Response
-//	@Router			/api/v1/login [post]
+//	@Router			/login [post]
 func (controller *Controller) Login(c *fiber.Ctx) error {
 	var bodyRequest LoginRequest
 

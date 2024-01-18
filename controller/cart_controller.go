@@ -21,7 +21,7 @@ import (
 //	@Success		201							{object} CartResponse
 //	@Failure		403							{object} Response
 //	@Failure		500							{object} Response
-//	@Router			/api/v1/carts [post]
+//	@Router			/carts [post]
 func (controller *Controller) CreateCart(c *fiber.Ctx) error {
 	var bodyRequest CreateCartRequest
 
@@ -75,7 +75,7 @@ func (controller *Controller) CreateCart(c *fiber.Ctx) error {
 //	@Security		Authorization
 //	@Success		200							{object} CartResponse
 //	@Failure		403							{object} Response
-//	@Router			/api/v1/carts [get]
+//	@Router			/carts [get]
 func (controller *Controller) FindCarts(c *fiber.Ctx) error {
 	authorization := c.Get("Authorization")
 
@@ -124,7 +124,7 @@ func (controller *Controller) FindCarts(c *fiber.Ctx) error {
 //	@Success		200							{object} CartResponse
 //	@Failure		403							{object} Response
 //	@Failure		500							{object} Response
-//	@Router			/api/v1/carts/{cart_id} [delete]
+//	@Router			/carts/{cart_id} [delete]
 func (controller *Controller) DeleteCart(c *fiber.Ctx) error {
 	param_id := c.Params("cart_id")
 	authorization := c.Get("Authorization")
