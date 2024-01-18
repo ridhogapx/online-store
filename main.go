@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/RageNeko26/online-store/config"
 	"github.com/RageNeko26/online-store/controller"
+	"github.com/RageNeko26/online-store/db"
 	"github.com/gofiber/fiber"
 )
 
@@ -16,7 +16,7 @@ func main() {
 	SECRET := os.Getenv("SECRET")
 
 	// Initialize configuration
-	q := config.NewDBConnection(&config.DBCredentials{
+	q := db.NewDBConnection(&db.DBCredentials{
 		User:     os.Getenv("DB_USER"),
 		Password: os.Getenv("DB_PASSWORD"),
 		Host:     os.Getenv("DB_HOST"),
