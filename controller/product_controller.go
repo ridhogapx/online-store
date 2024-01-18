@@ -21,7 +21,7 @@ import (
 //	@Success		200							{object} Response
 //	@Failure		500							{object} Response
 //	@Failure		404							{object} Response
-//	@Router			/api/v1/products [get]
+//	@Router			/products [get]
 func (controller *Controller) GetProductByCategory(c *fiber.Ctx) error {
 	// Get query category
 	category := c.Query("category")
@@ -63,7 +63,7 @@ func (controller *Controller) GetProductByCategory(c *fiber.Ctx) error {
 //	@Param 			product body				CreateProductRequest		true		"add product"
 //	@Success		201							{object} Response
 //	@Failure		500							{object} Response
-//	@Router			/api/v1/products [post]
+//	@Router			/products [post]
 func (controller *Controller) CreateProduct(c *fiber.Ctx) error {
 	var bodyRequest CreateProductRequest
 
