@@ -1,13 +1,28 @@
 version: '3'
 services:
+  postgres_db:
+    image: postgres:16-alpine
+    container_name: pg_container
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=synapsis
+      - POSTGRES_DB=online_store
+    ports:
+      - '5432:5432'
+    networks:
+      synapsis_net:
+        ipv4_address: 10.10.10.2
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data 
+
   app:
     container_name: online_store
     environment:
-      - DB_USER="root"
-      - DB_PASSWORD="synapsis"
-      - DB_HOST="localhost"
-      - DB_PORT="5432"
-      - DB_NAME="online_store"
+      - DB_USER=root
+      - DB_PASSWORD=synapsis
+      - DB_HOST=10.10.10.2
+      - DB_PORT=5432
+      - DB_NAME=online_store
     tty: true
     build: .
     ports:
@@ -18,27 +33,17 @@ services:
     depends_on:
       - postgres_db
     networks:
-      - synapsis_net
+      synapsis_net: 
+        ipv4_address: 10.10.10.3    
 
-  postgres_db:
-    image: postgres:16-alpine
-    container_name: pg_container
-    environment:
-      - POSTGRES_USER="root"
-      - POSTGRES_PASSWORD="synapsis"
-      - POSTGRES_DB="online_store"
-    ports:
-      - '5432:5432'
-    networks:
-      - synapsis_net
-    volumes:
-      - ./pg_data:/var/lib/postgresql/data 
-    command: /bin/bash -c createdb online_store
-    
 volumes: 
   pg_data:
 
 networks:
   synapsis_net:
     driver: bridge
+    ipam: 
+      config:
+        - subnet: 10.10.10.0/24
+          gateway: 10.10.10.1
    
