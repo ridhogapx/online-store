@@ -7,6 +7,17 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+// Add Category
+//
+//	@Summary Add category product data
+//	@Description 	Adding category for product
+//	@Tags			Product Category
+//	@Accept			json
+//	@Produce 		json
+//	@Param 			category body				CreateCategoryRequest		true		"add category"
+//	@Success		201							{object} db.Category
+//	@Failure		500							{object} Response
+//	@Router			/api/v1/categories [post]
 func (controller *Controller) CreateCategory(c *fiber.Ctx) error {
 	var bodyRequest CreateCategoryRequest
 
@@ -35,7 +46,7 @@ func (controller *Controller) FindCategories(c *fiber.Ctx) error {
 	if err != nil {
 		c.Status(http.StatusInternalServerError)
 		return c.JSON(Response{
-			Message: "Category is not empty",
+			Message: "Category is empty",
 			Status:  "fail",
 		})
 	}

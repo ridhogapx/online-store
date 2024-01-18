@@ -1,3 +1,4 @@
+basePath: /api/v1/
 definitions:
   controller.CartResponse:
     properties:
@@ -13,11 +14,23 @@ definitions:
       product_id:
         type: string
     type: object
+  controller.CreateCategoryRequest:
+    properties:
+      category_name:
+        type: string
+    type: object
   controller.Response:
     properties:
       message:
         type: string
       status:
+        type: string
+    type: object
+  db.Category:
+    properties:
+      category_id:
+        type: integer
+      category_name:
         type: string
     type: object
   db.FindCartRow:
@@ -31,8 +44,12 @@ definitions:
       product_name:
         type: string
     type: object
+host: localhost:3000
 info:
   contact: {}
+  description: An API Documentation Online Store App
+  title: Synapsis Online Store API
+  version: "1.0"
 paths:
   /api/v1/carts:
     get:
@@ -113,4 +130,30 @@ paths:
       summary: Delete existing cart.
       tags:
       - Shopping Cart
+  /api/v1/categories:
+    post:
+      consumes:
+      - application/json
+      description: Adding category for product
+      parameters:
+      - description: add category
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/controller.CreateCategoryRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/db.Category'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.Response'
+      summary: Add category product data
+      tags:
+      - Product Category
 swagger: "2.0"

@@ -17,7 +17,7 @@ import (
 // @contact_name RidhoGAPX
 // @contact_email ridhogalihpambudi57@gmail.com
 // @host localhost:3000
-// @BasePath /
+// @BasePath /api/v1/
 
 func main() {
 	app := fiber.New()
