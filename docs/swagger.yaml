@@ -97,7 +97,7 @@ paths:
       - application/json
       description: Listing all of products that customer have been add.
       parameters:
-      - description: authorization token
+      - description: authorization token customer
         in: header
         name: Authorization
         required: true
@@ -113,7 +113,7 @@ paths:
           description: Forbidden
           schema:
             $ref: '#/definitions/controller.Response'
-      summary: Find existing cart.
+      summary: Retrieve all of cart items.
       tags:
       - Shopping Cart
     post:
@@ -127,7 +127,7 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/controller.CreateCartRequest'
-      - description: authorization token
+      - description: authorization token customer
         in: header
         name: Authorization
         required: true
@@ -159,7 +159,7 @@ paths:
         name: cart_id
         required: true
         type: string
-      - description: authorization token
+      - description: authorization token customer
         in: header
         name: Authorization
         required: true

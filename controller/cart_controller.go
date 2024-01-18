@@ -68,7 +68,7 @@ func (controller *Controller) CreateCart(c *fiber.Ctx) error {
 
 // Find Cart
 //
-//	@Summary Find existing cart.
+//	@Summary Retrieve all of cart items.
 //	@Description 	Listing all of products that customer have been add.
 //	@Tags			Shopping Cart
 //	@Accept			json

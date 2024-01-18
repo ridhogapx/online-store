@@ -27,11 +27,11 @@ const docTemplate = `{
                 "tags": [
                     "Shopping Cart"
                 ],
-                "summary": "Find existing cart.",
+                "summary": "Retrieve all of cart items.",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "authorization token",
+                        "description": "authorization token customer",
                         "name": "Authorization",
                         "in": "header",
                         "required": true
@@ -76,7 +76,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "authorization token",
+                        "description": "authorization token customer",
                         "name": "Authorization",
                         "in": "header",
                         "required": true
@@ -124,7 +124,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "authorization token",
+                        "description": "authorization token customer",
                         "name": "Authorization",
                         "in": "header",
                         "required": true
