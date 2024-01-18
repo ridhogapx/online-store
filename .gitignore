@@ -1,1 +1,3 @@
 .env
+pg_data/
+pg-data/
