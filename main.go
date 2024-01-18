@@ -6,8 +6,18 @@ import (
 
 	"github.com/RageNeko26/online-store/controller"
 	"github.com/RageNeko26/online-store/db"
-	"github.com/gofiber/fiber"
+	_ "github.com/RageNeko26/online-store/docs"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/swagger"
 )
+
+// @title Synapsis Online Store API
+// @version 1.0
+// @description An API Documentation Online Store App
+// @contact_name RidhoGAPX
+// @contact_email ridhogalihpambudi57@gmail.com
+// @host localhost:3000
+// @BasePath /
 
 func main() {
 	app := fiber.New()
@@ -27,6 +37,9 @@ func main() {
 	controller := controller.Setup(app, q, []byte(SECRET))
 	// Initialize route
 	controller.Routes()
+
+	// Swagger
+	app.Get("/swagger/*", swagger.HandlerDefault)
 
 	// Internal logging
 	fmt.Println("Server is running")

@@ -6,11 +6,11 @@ import (
 
 	db "github.com/RageNeko26/online-store/db/sqlc"
 	"github.com/RageNeko26/online-store/utils"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
 )
 
-func (controller *Controller) CreateCart(c *fiber.Ctx) {
+func (controller *Controller) CreateCart(c *fiber.Ctx) error {
 	var bodyRequest CreateCartRequest
 
 	c.BodyParser(&bodyRequest)
@@ -22,10 +22,11 @@ func (controller *Controller) CreateCart(c *fiber.Ctx) {
 	// Check if token JWT is valid or not
 	if err != nil {
 		c.Status(http.StatusForbidden)
-		c.JSON(Response{
+		return c.JSON(Response{
 			Message: "Authorization is not valid",
 			Status:  "fail",
 		})
+
 	}
 
 	// If token is valid, insert into database
@@ -37,21 +38,22 @@ func (controller *Controller) CreateCart(c *fiber.Ctx) {
 
 	if err != nil {
 		c.Status(http.StatusInternalServerError)
-		c.JSON(Response{
+		return c.JSON(Response{
 			Message: "Failed to create shopping cart",
 			Status:  "fail",
 		})
-		return
+
 	}
 
 	c.Status(http.StatusCreated)
-	c.JSON(Response{
+	return c.JSON(Response{
 		Message: "Product is added into cart!",
 		Status:  "success",
 	})
+
 }
 
-func (controller *Controller) FindCarts(c *fiber.Ctx) {
+func (controller *Controller) FindCarts(c *fiber.Ctx) error {
 	authorization := c.Get("Authorization")
 
 	// Validate authorization
@@ -59,11 +61,11 @@ func (controller *Controller) FindCarts(c *fiber.Ctx) {
 
 	if err != nil {
 		c.Status(http.StatusForbidden)
-		c.JSON(Response{
+		return c.JSON(Response{
 			Message: "Forbidden",
 			Status:  "fail",
 		})
-		return
+
 	}
 
 	// Find Cart by Customer Name
@@ -71,23 +73,24 @@ func (controller *Controller) FindCarts(c *fiber.Ctx) {
 
 	if err != nil {
 		c.Status(http.StatusOK)
-		c.JSON(Response{
+		return c.JSON(Response{
 			Message: "Customer is not yet adding product into shopping cart",
 			Status:  "success",
 		})
-		return
+
 	}
 
 	quantity := len(cart)
 
 	c.Status(http.StatusOK)
-	c.JSON(CartResponse{
+	return c.JSON(CartResponse{
 		TotalQuantity: int64(quantity),
 		Products:      cart,
 	})
+
 }
 
-func (controller *Controller) DeleteCart(c *fiber.Ctx) {
+func (controller *Controller) DeleteCart(c *fiber.Ctx) error {
 	param_id := c.Params("cart_id")
 	authorization := c.Get("authorization")
 
@@ -96,11 +99,11 @@ func (controller *Controller) DeleteCart(c *fiber.Ctx) {
 
 	if err != nil {
 		c.Status(http.StatusForbidden)
-		c.JSON(Response{
+		return c.JSON(Response{
 			Message: "Forbidden",
 			Status:  "fail",
 		})
-		return
+
 	}
 
 	// If authorization is valid, do DELETE operation
@@ -108,16 +111,17 @@ func (controller *Controller) DeleteCart(c *fiber.Ctx) {
 
 	if err != nil {
 		c.Status(http.StatusInternalServerError)
-		c.JSON(Response{
+		return c.JSON(Response{
 			Message: "Failed to delete cart items",
 			Status:  "fail",
 		})
-		return
+
 	}
 
 	c.Status(http.StatusOK)
-	c.JSON(Response{
+	return c.JSON(Response{
 		Message: "Cart successfully deleted!",
 		Status:  "success",
 	})
+
 }

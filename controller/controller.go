@@ -2,7 +2,7 @@ package controller
 
 import (
 	db "github.com/RageNeko26/online-store/db/sqlc"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 )
 
 type Controller struct {

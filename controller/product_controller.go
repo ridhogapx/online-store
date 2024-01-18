@@ -6,11 +6,11 @@ import (
 	"strconv"
 
 	db "github.com/RageNeko26/online-store/db/sqlc"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
 )
 
-func (controller *Controller) GetProductByCategory(c *fiber.Ctx) {
+func (controller *Controller) GetProductByCategory(c *fiber.Ctx) error {
 	// Get query category
 	category := c.Query("category")
 
@@ -18,30 +18,30 @@ func (controller *Controller) GetProductByCategory(c *fiber.Ctx) {
 
 	if err != nil {
 		c.Status(http.StatusInternalServerError)
-		c.JSON(&Response{
+		return c.JSON(&Response{
 			Message: "Query string for category must be number",
 			Status:  "fail",
 		})
-		return
+
 	}
 
 	res, err := controller.Q.FindProductByCategory(context.Background(), int64(categoryNum))
 
 	if err != nil {
 		c.Status(http.StatusNotFound)
-		c.JSON(&Response{
+		return c.JSON(&Response{
 			Message: "Data is not found",
 			Status:  "fail",
 		})
-		return
+
 	}
 
 	c.Status(http.StatusOK)
-	c.JSON(res)
+	return c.JSON(res)
 
 }
 
-func (controller *Controller) CreateProduct(c *fiber.Ctx) {
+func (controller *Controller) CreateProduct(c *fiber.Ctx) error {
 	var bodyRequest CreateProductRequest
 
 	c.BodyParser(&bodyRequest)
@@ -55,13 +55,13 @@ func (controller *Controller) CreateProduct(c *fiber.Ctx) {
 
 	if err != nil {
 		c.Status(http.StatusInternalServerError)
-		c.JSON(Response{
+		return c.JSON(Response{
 			Message: "Failed to create product",
 			Status:  "fail",
 		})
-		return
+
 	}
 
 	c.Status(http.StatusCreated)
-	c.JSON(res)
+	return c.JSON(res)
 }

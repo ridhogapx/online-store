@@ -4,10 +4,10 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 )
 
-func (controller *Controller) CreateCategory(c *fiber.Ctx) {
+func (controller *Controller) CreateCategory(c *fiber.Ctx) error {
 	var bodyRequest CreateCategoryRequest
 
 	c.BodyParser(&bodyRequest)
@@ -17,30 +17,30 @@ func (controller *Controller) CreateCategory(c *fiber.Ctx) {
 	if err != nil {
 		c.Status(http.StatusInternalServerError)
 
-		c.JSON(Response{
+		return c.JSON(Response{
 			Message: "Failed to create category",
 			Status:  "fail",
 		})
 
-		return
 	}
 
 	c.Status(http.StatusCreated)
-	c.JSON(res)
+	return c.JSON(res)
+
 }
 
-func (controller *Controller) FindCategories(c *fiber.Ctx) {
+func (controller *Controller) FindCategories(c *fiber.Ctx) error {
 	res, err := controller.Q.FindAllCategories(context.Background())
 
 	if err != nil {
 		c.Status(http.StatusInternalServerError)
-		c.JSON(Response{
+		return c.JSON(Response{
 			Message: "Category is not empty",
 			Status:  "fail",
 		})
-		return
 	}
 
 	c.Status(http.StatusOK)
-	c.JSON(res)
+	return c.JSON(res)
+
 }

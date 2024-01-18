@@ -7,12 +7,12 @@ import (
 
 	db "github.com/RageNeko26/online-store/db/sqlc"
 	"github.com/RageNeko26/online-store/utils"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
-func (controller *Controller) Register(c *fiber.Ctx) {
+func (controller *Controller) Register(c *fiber.Ctx) error {
 	var bodyRequest RegisterRequest
 
 	c.BodyParser(&bodyRequest)
@@ -23,12 +23,11 @@ func (controller *Controller) Register(c *fiber.Ctx) {
 
 	if err == nil {
 		c.Status(http.StatusInternalServerError)
-		c.JSON(Response{
+		return c.JSON(Response{
 			Message: "Customer is already registered",
 			Status:  "fail",
 		})
 
-		return
 	}
 
 	pass := []byte(bodyRequest.Password)
@@ -45,21 +44,22 @@ func (controller *Controller) Register(c *fiber.Ctx) {
 	if err != nil {
 		fmt.Println("Error:", err)
 		c.Status(http.StatusInternalServerError)
-		c.JSON(Response{
+		return c.JSON(Response{
 			Message: "Failed to register customer because internal server error",
 			Status:  "fail",
 		})
-		return
+
 	}
 
 	c.Status(http.StatusCreated)
-	c.JSON(Response{
+	return c.JSON(Response{
 		Message: "Successfully register user!",
 		Status:  "success",
 	})
+
 }
 
-func (controller *Controller) Login(c *fiber.Ctx) {
+func (controller *Controller) Login(c *fiber.Ctx) error {
 	var bodyRequest LoginRequest
 
 	c.BodyParser(&bodyRequest)
@@ -69,11 +69,11 @@ func (controller *Controller) Login(c *fiber.Ctx) {
 
 	if err != nil {
 		c.Status(http.StatusNotFound)
-		c.JSON(Response{
+		return c.JSON(Response{
 			Message: "Customer is not registered",
 			Status:  "fail",
 		})
-		return
+
 	}
 
 	// Compare password in hash
@@ -84,11 +84,11 @@ func (controller *Controller) Login(c *fiber.Ctx) {
 
 	if err != nil {
 		c.Status(http.StatusBadRequest)
-		c.JSON(Response{
+		return c.JSON(Response{
 			Message: "Password is incorrect",
 			Status:  "fal",
 		})
-		return
+
 	}
 
 	// Generate token if user is success login
@@ -101,15 +101,15 @@ func (controller *Controller) Login(c *fiber.Ctx) {
 
 	if err != nil {
 		c.Status(http.StatusInternalServerError)
-		c.JSON(Response{
+		return c.JSON(Response{
 			Message: "Failed to generate token authorization",
 			Status:  "fail",
 		})
-		return
 	}
 
 	c.Status(http.StatusOK)
-	c.JSON(LoginResponse{
+	return c.JSON(LoginResponse{
 		Token: token,
 	})
+
 }
