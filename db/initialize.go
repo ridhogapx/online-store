@@ -31,7 +31,7 @@ func Migrate(source string) {
 	m, err := migrate.NewWithSourceInstance("iofs", d, source)
 
 	if err != nil {
-		panic(err)
+		log.Fatal("Failed to migrate:", err)
 	}
 
 	err = m.Up()
