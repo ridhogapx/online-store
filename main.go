@@ -16,7 +16,7 @@ import (
 // @description An API Documentation Online Store App
 // @contact_name RidhoGAPX
 // @contact_email ridhogalihpambudi57@gmail.com
-// @host localhost:3000
+// @host ec2-3-85-238-209.compute-1.amazonaws.com:3000
 // @BasePath /api/v1/
 
 func main() {

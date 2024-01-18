@@ -84,7 +84,7 @@ definitions:
       product_name:
         type: string
     type: object
-host: localhost:3000
+host: ec2-3-85-238-209.compute-1.amazonaws.com:3000
 info:
   contact: {}
   description: An API Documentation Online Store App

@@ -6,7 +6,7 @@
         "contact": {},
         "version": "1.0"
     },
-    "host": "localhost:3000",
+    "host": "ec2-3-85-238-209.compute-1.amazonaws.com:3000",
     "basePath": "/api/v1/",
     "paths": {
         "/carts": {
