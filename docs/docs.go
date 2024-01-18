@@ -222,7 +222,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "description": "check customer",
-                        "name": "category",
+                        "name": "login",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -258,6 +258,88 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/products": {
+            "get": {
+                "description": "Listing all of products by category id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get Product by category id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "category",
+                        "name": "category",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/controller.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/controller.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Adding new product data",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Add new product data",
+                "parameters": [
+                    {
+                        "description": "add product",
+                        "name": "product",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreateProductRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/controller.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/controller.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/register": {
             "post": {
                 "description": "Register new customer",
@@ -274,7 +356,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "description": "add customer",
-                        "name": "category",
+                        "name": "register",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -332,6 +414,20 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "category_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.CreateProductRequest": {
+            "type": "object",
+            "properties": {
+                "category_id": {
+                    "type": "integer"
+                },
+                "price": {
+                    "type": "integer"
+                },
+                "product_name": {
                     "type": "string"
                 }
             }

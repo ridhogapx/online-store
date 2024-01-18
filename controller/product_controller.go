@@ -10,6 +10,18 @@ import (
 	"github.com/google/uuid"
 )
 
+// Get Products By Cateogry
+//
+//	@Summary Get Product by category id
+//	@Description 	Listing all of products by category id
+//	@Tags			Product
+//	@Accept			json
+//	@Produce 		json
+//	@Param 			category query				int		true		"category"
+//	@Success		200							{object} Response
+//	@Failure		500							{object} Response
+//	@Failure		404							{object} Response
+//	@Router			/api/v1/products [get]
 func (controller *Controller) GetProductByCategory(c *fiber.Ctx) error {
 	// Get query category
 	category := c.Query("category")
@@ -41,6 +53,17 @@ func (controller *Controller) GetProductByCategory(c *fiber.Ctx) error {
 
 }
 
+// Add Product
+//
+//	@Summary Add new product data
+//	@Description 	Adding new product data
+//	@Tags			Product
+//	@Accept			json
+//	@Produce 		json
+//	@Param 			product body				CreateProductRequest		true		"add product"
+//	@Success		201							{object} Response
+//	@Failure		500							{object} Response
+//	@Router			/api/v1/products [post]
 func (controller *Controller) CreateProduct(c *fiber.Ctx) error {
 	var bodyRequest CreateProductRequest
 

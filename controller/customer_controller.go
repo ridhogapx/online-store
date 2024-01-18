@@ -19,7 +19,7 @@ import (
 //	@Tags			Customer
 //	@Accept			json
 //	@Produce 		json
-//	@Param 			category body				RegisterRequest		true		"add customer"
+//	@Param 			register body				RegisterRequest		true		"add customer"
 //	@Success		201							{object} Response
 //	@Failure		500							{object} Response
 //	@Failure		400							{object} Response
@@ -78,7 +78,7 @@ func (controller *Controller) Register(c *fiber.Ctx) error {
 //	@Tags			Customer
 //	@Accept			json
 //	@Produce 		json
-//	@Param 			category body				LoginRequest		true		"check customer"
+//	@Param 			login body				LoginRequest		true		"check customer"
 //	@Success		200							{object} Response
 //	@Failure		500							{object} Response
 //	@Failure		404							{object} Response

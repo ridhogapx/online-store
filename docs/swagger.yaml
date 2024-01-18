@@ -19,6 +19,15 @@ definitions:
       category_name:
         type: string
     type: object
+  controller.CreateProductRequest:
+    properties:
+      category_id:
+        type: integer
+      price:
+        type: integer
+      product_name:
+        type: string
+    type: object
   controller.LoginRequest:
     properties:
       email:
@@ -200,7 +209,7 @@ paths:
       parameters:
       - description: check customer
         in: body
-        name: category
+        name: login
         required: true
         schema:
           $ref: '#/definitions/controller.LoginRequest'
@@ -226,6 +235,60 @@ paths:
       summary: Check and authorize customer.
       tags:
       - Customer
+  /api/v1/products:
+    get:
+      consumes:
+      - application/json
+      description: Listing all of products by category id
+      parameters:
+      - description: category
+        in: query
+        name: category
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/controller.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.Response'
+      summary: Get Product by category id
+      tags:
+      - Product
+    post:
+      consumes:
+      - application/json
+      description: Adding new product data
+      parameters:
+      - description: add product
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/controller.CreateProductRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/controller.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.Response'
+      summary: Add new product data
+      tags:
+      - Product
   /api/v1/register:
     post:
       consumes:
@@ -234,7 +297,7 @@ paths:
       parameters:
       - description: add customer
         in: body
-        name: category
+        name: register
         required: true
         schema:
           $ref: '#/definitions/controller.RegisterRequest'
