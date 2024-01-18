@@ -23,6 +23,7 @@ services:
       - DB_HOST=10.10.10.2
       - DB_PORT=5432
       - DB_NAME=online_store
+      - SECRET="my_very_secret_stuff"
     tty: true
     build: .
     ports:
