@@ -19,6 +19,24 @@ definitions:
       category_name:
         type: string
     type: object
+  controller.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  controller.RegisterRequest:
+    properties:
+      address:
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+    type: object
   controller.Response:
     properties:
       message:
@@ -174,4 +192,68 @@ paths:
       summary: Add category product data
       tags:
       - Product Category
+  /api/v1/login:
+    post:
+      consumes:
+      - application/json
+      description: Authorize customer and returning token.
+      parameters:
+      - description: check customer
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/controller.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controller.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/controller.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.Response'
+      summary: Check and authorize customer.
+      tags:
+      - Customer
+  /api/v1/register:
+    post:
+      consumes:
+      - application/json
+      description: Register new customer
+      parameters:
+      - description: add customer
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/controller.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/controller.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controller.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.Response'
+      summary: Add new customer data
+      tags:
+      - Customer
 swagger: "2.0"

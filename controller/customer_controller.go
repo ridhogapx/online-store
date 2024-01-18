@@ -12,6 +12,18 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// Add Customer
+//
+//	@Summary Add new customer data
+//	@Description 	Register new customer
+//	@Tags			Customer
+//	@Accept			json
+//	@Produce 		json
+//	@Param 			category body				RegisterRequest		true		"add customer"
+//	@Success		201							{object} Response
+//	@Failure		500							{object} Response
+//	@Failure		400							{object} Response
+//	@Router			/api/v1/register [post]
 func (controller *Controller) Register(c *fiber.Ctx) error {
 	var bodyRequest RegisterRequest
 
@@ -22,7 +34,7 @@ func (controller *Controller) Register(c *fiber.Ctx) error {
 	_, err := controller.Q.FindCustomerByEmail(context.Background(), bodyRequest.Email)
 
 	if err == nil {
-		c.Status(http.StatusInternalServerError)
+		c.Status(http.StatusBadRequest)
 		return c.JSON(Response{
 			Message: "Customer is already registered",
 			Status:  "fail",
@@ -59,6 +71,19 @@ func (controller *Controller) Register(c *fiber.Ctx) error {
 
 }
 
+// Check Customer
+//
+//	@Summary Check and authorize customer.
+//	@Description 	Authorize customer and returning token.
+//	@Tags			Customer
+//	@Accept			json
+//	@Produce 		json
+//	@Param 			category body				LoginRequest		true		"check customer"
+//	@Success		200							{object} Response
+//	@Failure		500							{object} Response
+//	@Failure		404							{object} Response
+//	@Failure		400							{object} Response
+//	@Router			/api/v1/login [post]
 func (controller *Controller) Login(c *fiber.Ctx) error {
 	var bodyRequest LoginRequest
 
@@ -86,7 +111,7 @@ func (controller *Controller) Login(c *fiber.Ctx) error {
 		c.Status(http.StatusBadRequest)
 		return c.JSON(Response{
 			Message: "Password is incorrect",
-			Status:  "fal",
+			Status:  "fail",
 		})
 
 	}
