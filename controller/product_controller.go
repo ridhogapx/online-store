@@ -39,7 +39,7 @@ func (controller *Controller) GetProductByCategory(c *fiber.Ctx) error {
 
 	res, err := controller.Q.FindProductByCategory(context.Background(), int64(categoryNum))
 
-	if err != nil {
+	if err != nil || res == nil {
 		c.Status(http.StatusNotFound)
 		return c.JSON(&Response{
 			Message: "Data is not found",
