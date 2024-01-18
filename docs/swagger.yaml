@@ -28,6 +28,19 @@ definitions:
       product_name:
         type: string
     type: object
+  controller.CreateTransactionResponse:
+    properties:
+      created_at:
+        type: string
+      products:
+        items:
+          $ref: '#/definitions/db.FindCartRow'
+        type: array
+      total_price:
+        type: integer
+      transaction_id:
+        type: string
+    type: object
   controller.LoginRequest:
     properties:
       email:
@@ -201,6 +214,25 @@ paths:
       summary: Add category product data
       tags:
       - Product Category
+  /checkout:
+    post:
+      description: Adding list products in cart and make a transaction report
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/controller.CreateTransactionResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.Response'
+      security:
+      - Authorization: []
+      summary: Checkout product
+      tags:
+      - Transaction Report
   /login:
     post:
       consumes:

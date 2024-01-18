@@ -206,6 +206,37 @@ const docTemplate = `{
                 }
             }
         },
+        "/checkout": {
+            "post": {
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ],
+                "description": "Adding list products in cart and make a transaction report",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Transaction Report"
+                ],
+                "summary": "Checkout product",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreateTransactionResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/controller.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/login": {
             "post": {
                 "description": "Authorize customer and returning token.",
@@ -428,6 +459,26 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "product_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.CreateTransactionResponse": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "products": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/db.FindCartRow"
+                    }
+                },
+                "total_price": {
+                    "type": "integer"
+                },
+                "transaction_id": {
                     "type": "string"
                 }
             }

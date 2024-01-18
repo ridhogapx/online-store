@@ -10,6 +10,16 @@ import (
 	"github.com/google/uuid"
 )
 
+// Checkout product
+//
+//	@Summary Checkout product
+//	@Description 	Adding list products in cart and make a transaction report
+//	@Tags			Transaction Report
+//	@Produce 		json
+//	@Security		Authorization
+//	@Success		201							{object} CreateTransactionResponse
+//	@Failure		500							{object} Response
+//	@Router			/checkout [post]
 func (controller *Controller) CreateTransaction(c *fiber.Ctx) error {
 	authorization := c.Get("Authorization")
 
