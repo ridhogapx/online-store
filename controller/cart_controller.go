@@ -10,6 +10,18 @@ import (
 	"github.com/google/uuid"
 )
 
+// Add Cart
+//
+//	@Summary Add product item into cart
+//	@Description 	Add Cart using JSON
+//	@Tags			Shopping Cart
+//	@Accept			json
+//	@Produce 		json
+//	@Param 			cart body					CreateCartRequest		true		"add cart"
+//	@Success		201							{object} CartResponse
+//	@Failure		403							{object} Response
+//	@Failure		500							{object} Response
+//	@Router			/api/v1/carts [post]
 func (controller *Controller) CreateCart(c *fiber.Ctx) error {
 	var bodyRequest CreateCartRequest
 
@@ -53,6 +65,17 @@ func (controller *Controller) CreateCart(c *fiber.Ctx) error {
 
 }
 
+// Find Cart
+//
+//	@Summary Find existing cart.
+//	@Description 	Listing all of products that customer have been add.
+//	@Tags			Shopping Cart
+//	@Accept			json
+//	@Produce 		json
+//	@Security		Authorization
+//	@Success		200							{object} CartResponse
+//	@Failure		403							{object} Response
+//	@Router			/api/v1/carts [get]
 func (controller *Controller) FindCarts(c *fiber.Ctx) error {
 	authorization := c.Get("Authorization")
 
@@ -90,6 +113,18 @@ func (controller *Controller) FindCarts(c *fiber.Ctx) error {
 
 }
 
+// Delete Cart
+//
+//	@Summary Delete existing cart.
+//	@Description 	Delete selected cart item by id.
+//	@Tags			Shopping Cart
+//	@Param			cart_id	path	string true	"Cart ID"
+//	@Produce 		json
+//	@Security		Authorization
+//	@Success		200							{object} CartResponse
+//	@Failure		403							{object} Response
+//	@Failure		500							{object} Response
+//	@Router			/api/v1/carts/{cart_id} [delete]
 func (controller *Controller) DeleteCart(c *fiber.Ctx) error {
 	param_id := c.Params("cart_id")
 	authorization := c.Get("authorization")

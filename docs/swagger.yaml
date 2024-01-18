@@ -1,4 +1,116 @@
+definitions:
+  controller.CartResponse:
+    properties:
+      products:
+        items:
+          $ref: '#/definitions/db.FindCartRow'
+        type: array
+      total_quantity:
+        type: integer
+    type: object
+  controller.CreateCartRequest:
+    properties:
+      product_id:
+        type: string
+    type: object
+  controller.Response:
+    properties:
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+  db.FindCartRow:
+    properties:
+      cart_id:
+        type: string
+      customer_name:
+        type: string
+      price:
+        type: integer
+      product_name:
+        type: string
+    type: object
 info:
   contact: {}
-paths: {}
+paths:
+  /api/v1/carts:
+    get:
+      consumes:
+      - application/json
+      description: Listing all of products that customer have been add.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.CartResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/controller.Response'
+      security:
+      - Authorization: []
+      summary: Find existing cart.
+      tags:
+      - Shopping Cart
+    post:
+      consumes:
+      - application/json
+      description: Add Cart using JSON
+      parameters:
+      - description: add cart
+        in: body
+        name: cart
+        required: true
+        schema:
+          $ref: '#/definitions/controller.CreateCartRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/controller.CartResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/controller.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.Response'
+      summary: Add product item into cart
+      tags:
+      - Shopping Cart
+  /api/v1/carts/{cart_id}:
+    delete:
+      description: Delete selected cart item by id.
+      parameters:
+      - description: Cart ID
+        in: path
+        name: cart_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.CartResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/controller.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.Response'
+      security:
+      - Authorization: []
+      summary: Delete existing cart.
+      tags:
+      - Shopping Cart
 swagger: "2.0"
