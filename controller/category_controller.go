@@ -40,11 +40,20 @@ func (controller *Controller) CreateCategory(c *fiber.Ctx) error {
 
 }
 
+// Get All Categoriy
+//
+//	@Summary Get product categories
+//	@Description 	Listing all of categories product.
+//	@Tags			Product Category
+//	@Produce 		json
+//	@Success		200							{object} []db.Category
+//	@Failure		404							{object} Response
+//	@Router			/api/v1/categories [get]
 func (controller *Controller) FindCategories(c *fiber.Ctx) error {
 	res, err := controller.Q.FindAllCategories(context.Background())
 
 	if err != nil {
-		c.Status(http.StatusInternalServerError)
+		c.Status(http.StatusNotFound)
 		return c.JSON(Response{
 			Message: "Category is empty",
 			Status:  "fail",

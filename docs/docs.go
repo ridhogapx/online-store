@@ -140,6 +140,33 @@ const docTemplate = `{
             }
         },
         "/api/v1/categories": {
+            "get": {
+                "description": "Listing all of categories product.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Product Category"
+                ],
+                "summary": "Get product categories",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/db.Category"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/controller.Response"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "Adding category for product",
                 "consumes": [
