@@ -221,11 +221,6 @@ const docTemplate = `{
         },
         "/checkout": {
             "post": {
-                "security": [
-                    {
-                        "Authorization": []
-                    }
-                ],
                 "description": "Adding list products in cart and make a transaction report",
                 "produces": [
                     "application/json"
@@ -234,6 +229,15 @@ const docTemplate = `{
                     "Transaction Report"
                 ],
                 "summary": "Checkout product",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "authorization token customer",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "201": {
                         "description": "Created",

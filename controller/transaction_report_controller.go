@@ -16,7 +16,7 @@ import (
 //	@Description 	Adding list products in cart and make a transaction report
 //	@Tags			Transaction Report
 //	@Produce 		json
-//	@Security		Authorization
+//	@Param			Authorization header	string true "authorization token customer"
 //	@Success		201							{object} CreateTransactionResponse
 //	@Failure		500							{object} Response
 //	@Router			/checkout [post]

@@ -229,6 +229,12 @@ paths:
   /checkout:
     post:
       description: Adding list products in cart and make a transaction report
+      parameters:
+      - description: authorization token customer
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -240,8 +246,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/controller.Response'
-      security:
-      - Authorization: []
       summary: Checkout product
       tags:
       - Transaction Report
