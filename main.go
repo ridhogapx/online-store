@@ -39,7 +39,7 @@ func main() {
 	controller.Routes()
 
 	// Swagger
-	app.Get("/swagger/*", swagger.HandlerDefault)
+	controller.App.Get("/swagger/*", swagger.HandlerDefault)
 
 	// Internal logging
 	fmt.Println("Server is running")
