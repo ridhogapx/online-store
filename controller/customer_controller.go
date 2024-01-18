@@ -2,6 +2,7 @@ package controller
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	db "github.com/RageNeko26/online-store/db/sqlc"
@@ -42,6 +43,7 @@ func (controller *Controller) Register(c *fiber.Ctx) {
 	})
 
 	if err != nil {
+		fmt.Println("Error:", err)
 		c.Status(http.StatusInternalServerError)
 		c.JSON(Response{
 			Message: "Failed to register customer because internal server error",
