@@ -1,4 +1,4 @@
-## Synapsis Backend Challenge
+# Synapsis Backend Challenge
 As a BackEnd Engineer you are required to create an online store application, you don't need to create a FrontEnd but focus on the BackEnd (RESTful API) only. The programming language you must use is Go-lang or Java spring boot.
 You can develop your app by starting with prioritized features first. The following are the priority features to meet the MVP (minimum viable product) criteria:
 
@@ -33,3 +33,18 @@ $ docker compose up
 
 ## Network Configuration 
 This app using custom network adapter configuration static IP Address named <b>Synapsis Net</b> inside Docker Container and using segment IP Address 10.10.10.x/24. Postgres as the database is configure with IP Address 10.10.10.2 and the Web Services is configure with IP Address 10.10.10.3
+
+
+## ERD
+This is the diagram relationship about Online Store App that i made.
+
+<img src="Shopping.png">
+
+## API Spec 
+Below is base url endpoint API in development and production.
+
+| URL Endpoint      |       Stage       |
+| ------------------| ------------------|
+| http://localhost:3000/ | http://ec2-3-85-238-209.compute-1.amazonaws.com:3000/ |
+
+To access Swagger, you just need to open route /swagger. So, if in production, it will be <a href="http://ec2-3-85-238-209.compute-1.amazonaws.com:3000/swagger/">http://ec2-3-85-238-209.compute-1.amazonaws.com:3000/swagger/</a> 
