@@ -4,14 +4,14 @@ services:
     container_name: online_store
     environment:
       - DB_USER="root"
-      - DB_PASSWORD="root"
+      - DB_PASSWORD="synapsis"
       - DB_HOST="localhost"
       - DB_PORT="5432"
       - DB_NAME="online_store"
     tty: true
     build: .
     ports:
-      - 3000:3000
+      - '3000:3000'
     restart: on-failure
     volumes:
       - .:/app
@@ -23,13 +23,17 @@ services:
   postgres_db:
     image: postgres:16-alpine
     container_name: pg_container
+    environment:
+      - POSTGRES_USER="root"
+      - POSTGRES_PASSWORD="synapsis"
+      - POSTGRES_DB="online_store"
     ports:
-      - 5432:5432
+      - '5432:5432'
     networks:
       - synapsis_net
     volumes:
       - ./pg_data:/var/lib/postgresql/data 
-    command: createdb online_store
+    command: /bin/bash -c createdb online_store
     
 volumes: 
   pg_data:

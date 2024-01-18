@@ -1,4 +1,4 @@
-FROM golang:1.20.6-alpine3.18
+FROM golang:1.21.3
 
 RUN mkdir /online-store
 WORKDIR /online-store
